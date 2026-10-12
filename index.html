@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>경영정보학부 한눈에 보기 | 국민대학교 (비공식 실습 사이트)</title>
+<meta name="description" content="국민대학교 경영정보학부(비즈니스IT전공)가 궁금한 사람을 위한 안내: 무엇을 배우는지, 어떤 진로가 있는지, 나와 맞는지 한 번에 확인하세요.">
+<meta property="og:title" content="경영정보학부, 한 번에 찾아보기">
+<meta property="og:description" content="배우는 것 · 진로 · 자격증 · 적성 테스트까지">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&display=swap">
+<style>
+:root{--bg:#eef2f7;--ink:#101b3a;--mute:#4d5878;--card:#fff;--biz:#e8890c;--it:#2a55ff;--line:#cfd7e6;--mix:50}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0d1226;--ink:#eaf0ff;--mute:#a4afcf;--card:#161d38;--line:#2a3359;--biz:#ffb24d;--it:#7a97ff}}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{margin:0;font:400 17px/1.7 "IBM Plex Sans KR",system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--it);outline-offset:2px}
+.wrap{max-width:1020px;margin:0 auto;padding:0 20px}
+nav{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;gap:4px;overflow-x:auto;align-items:center}
+nav b{margin-right:auto;white-space:nowrap;padding:14px 0}
+nav a{padding:14px 10px;text-decoration:none;font-size:15px;white-space:nowrap;color:var(--mute)}
+nav a:hover,nav a.on{color:var(--ink);box-shadow:inset 0 -3px var(--it)}
+section{padding:72px 0}
+h1,h2,h3{line-height:1.25;margin:0 0 .5em;letter-spacing:-.02em}
+h1{font-size:clamp(34px,6vw,64px);font-weight:700}h2{font-size:clamp(26px,4vw,38px)}h3{font-size:20px}
+p{margin:0 0 1em;color:var(--mute)}
+.hero{padding:56px 0 40px;background:linear-gradient(90deg,color-mix(in srgb,var(--biz) calc((100 - var(--mix))*.35%),transparent),color-mix(in srgb,var(--it) calc(var(--mix)*.35%),transparent))}
+.mixer{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;margin-top:28px}
+.mixer .lab{display:flex;justify-content:space-between;font-weight:700}
+.mixer .lab span:first-child{color:var(--biz)}.mixer .lab span:last-child{color:var(--it)}
+input[type=range]{width:100%;height:36px;accent-color:var(--it)}
+.out{min-height:84px}.out strong{font-size:22px}
+.pill{display:inline-block;padding:4px 12px;margin:4px 6px 0 0;border-radius:99px;border:1.5px solid var(--line);font-size:15px;background:var(--bg)}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:28px}
+.fact{padding:16px 18px;border-left:5px solid var(--it);background:var(--card);border-radius:6px}
+.fact b{display:block;font-size:34px;line-height:1.1}.fact small{color:var(--mute)}
+.tabs,.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+button{font:inherit;cursor:pointer}
+.tab,.chip{padding:8px 16px;border-radius:99px;border:1.5px solid var(--line);background:var(--card);color:var(--ink)}
+.tab[aria-selected=true],.chip[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.box h3{font-size:17px;margin-bottom:.3em}.box p{margin:0;font-size:15px}
+.hide{display:none!important}
+.search{width:100%;max-width:360px;padding:10px 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font:inherit;margin-bottom:14px}
+.q{margin-bottom:22px}.q legend{font-weight:700;margin-bottom:8px}
+.opt{display:block;padding:10px 14px;margin-bottom:8px;border:1.5px solid var(--line);border-radius:10px;background:var(--card);cursor:pointer}
+.opt:has(input:checked){border-color:var(--it);background:color-mix(in srgb,var(--it) 12%,var(--card))}
+.btn{padding:12px 24px;border:0;border-radius:10px;background:var(--it);color:#fff;font-weight:700}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line);margin-left:8px}
+#result{margin-top:22px;padding:20px;border-radius:14px;background:var(--card);border:2px solid var(--it)}
+.bar{height:10px;border-radius:9px;background:var(--line);margin:4px 0 12px;overflow:hidden}.bar i{display:block;height:100%;background:var(--it);width:0;transition:width .6s}
+details{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 18px;margin-bottom:10px}
+summary{font-weight:700;cursor:pointer}details p{margin:.6em 0 0}
+.links{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.links a{display:block;padding:16px;border-radius:10px;background:var(--ink);color:var(--bg);text-decoration:none;font-weight:700}
+.links a small{display:block;font-weight:400;opacity:.8}
+footer{padding:36px 0;border-top:1px solid var(--line);font-size:14px;color:var(--mute)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<nav><div class="wrap"><b>MIS 국민</b>
+<a href="#learn">배우는 것</a><a href="#career">진로</a><a href="#cert">자격증</a><a href="#fit">나와 맞을까?</a><a href="#faq">자주 묻는 질문</a><a href="#more">공식 정보</a></div></nav>
+
+<header class="hero"><div class="wrap">
+<h1>경영을 알고,<br>기술도 다루는 사람.</h1>
+<p style="font-size:19px;max-width:620px">국민대학교 경영정보학부(비즈니스IT전공)가 궁금하다면 여기서 필요한 것만 골라 보세요. 아래 슬라이더를 움직이면 경영과 IT의 비율에 따라 무엇을 하게 되는지 바뀝니다.</p>
+<div class="mixer">
+ <div class="lab"><span>경영</span><span>IT</span></div>
+ <input id="mix" type="range" min="0" max="100" value="50" aria-label="경영과 IT의 비율">
+ <div class="out" aria-live="polite"><strong id="mixTitle"></strong><div id="mixPills"></div></div>
+</div>
+<div class="facts">
+ <div class="fact"><b><span data-n="1984">0</span></b><small>국내 최초 MIS 학부과정(정보관리학과)</small></div>
+ <div class="fact"><b>1개</b><small>현재 단일 전공 체제: 비즈니스IT전공</small></div>
+ <div class="fact"><b>4개</b><small>중심 분야: 데이터 분석, 혁신, 시스템, 사용자 경험</small></div>
+</div>
+</div></header>
+
+<section id="learn"><div class="wrap">
+<h2>무엇을 배우나요?</h2>
+<p>저학년엔 기초를 넓게, 고학년엔 응용을 깊게 배웁니다.</p>
+<div class="tabs" role="tablist"><button class="tab" role="tab" aria-selected="true" data-t="low">저학년</button><button class="tab" role="tab" aria-selected="false" data-t="up">고학년</button><button class="tab" role="tab" aria-selected="false" data-t="ai">요즘 강화 중</button></div>
+<div class="grid" id="learnGrid"></div>
+</div></section>
+
+<section id="career" style="background:color-mix(in srgb,var(--it) 6%,transparent)"><div class="wrap">
+<h2>졸업하면 어디서 일하나요?</h2>
+<p>하고 싶은 일로 골라 보세요.</p>
+<div class="chips" id="careerChips"></div>
+<div class="grid" id="careerGrid"></div>
+</div></section>
+
+<section id="cert"><div class="wrap">
+<h2>준비해 두면 좋은 자격증</h2>
+<p>학부 소개 페이지에 소개된 자격증입니다. 이름이나 분야로 찾아보세요.</p>
+<input class="search" id="certQ" type="search" placeholder="예: SQL, 회계, 네트워크" aria-label="자격증 검색">
+<div class="chips" id="certChips"></div>
+<div class="grid" id="certGrid"></div>
+<p id="certEmpty" class="hide">일치하는 자격증이 없어요. 다른 단어로 검색해 보세요.</p>
+</div></section>
+
+<section id="fit" style="background:color-mix(in srgb,var(--biz) 8%,transparent)"><div class="wrap" style="max-width:720px">
+<h2>나와 맞을까? 1분 테스트</h2>
+<p>정답은 없어요. 끌리는 쪽을 고르면 어떤 분야가 가까운지 알려 드립니다.</p>
+<form id="quiz"></form>
+<button class="btn" id="go" type="button">결과 보기</button><button class="btn ghost" id="reset" type="button">다시 하기</button>
+<div id="result" class="hide" aria-live="polite"></div>
+</div></section>
+
+<section id="faq"><div class="wrap" style="max-width:720px">
+<h2>자주 묻는 질문</h2>
+<details><summary>문과인데 코딩을 못 해도 괜찮나요?</summary><p>저학년에서 HTML, Python 같은 프로그래밍 기초와 데이터베이스 기초부터 배웁니다. 처음부터 잘해야 하는 건 아니에요.</p></details>
+<details><summary>전공이 하나뿐인가요?</summary><p>네. 현재 경영정보학부는 비즈니스IT전공의 단일 전공 체제로 운영됩니다.</p></details>
+<details><summary>개발자만 되나요?</summary><p>아니요. IT 컨설팅, 정보화 기획·전략, 정보시스템 관리·운영, 빅데이터 분석 등 직무가 다양합니다. 위 진로 카드를 필터로 확인해 보세요.</p></details>
+<details><summary>선배들과 연결될 기회가 있나요?</summary><p>졸업생들이 멘토링 프로그램을 통해 후배를 돕는 선순환이 이어지고 있다고 학부는 소개합니다.</p></details>
+<details><summary>이 사이트가 공식 정보인가요?</summary><p>아니요. 학부 공식 소개 페이지를 바탕으로 만든 개인 실습 사이트입니다. 졸업요건 등 정확한 내용은 아래 공식 링크에서 꼭 확인하세요.</p></details>
+</div></section>
+
+<section id="more" style="padding-top:20px"><div class="wrap">
+<h2>더 정확한 정보는 공식 사이트에서</h2>
+<div class="links">
+ <a href="https://biz.kookmin.ac.kr/undergraduate/info/intro">학부 소개<small>비전, 연혁</small></a>
+ <a href="https://biz.kookmin.ac.kr/undergraduate/info/major?tab=1">교과과정<small>전공 커리큘럼</small></a>
+ <a href="https://biz.kookmin.ac.kr/undergraduate/info/major?tab=3">졸업요건<small>이수학점 확인</small></a>
+ <a href="https://biz.kookmin.ac.kr/undergraduate/info/major?tab=4">취업·진로<small>선배들의 길</small></a>
+ <a href="https://biz.kookmin.ac.kr/undergraduate/info/professor">교수진<small>연구 분야 보기</small></a>
+ <a href="https://biz.kookmin.ac.kr/community/notice/">경영대 공지<small>학사·취업·행사</small></a>
+</div>
+</div></section>
+
+<footer><div class="wrap">
+국민대학교 경영대학 서울특별시 성북구 정릉로 77 · TEL <a href="tel:029105202">02-910-5202</a> · <a href="mailto:biz@kookmin.ac.kr">biz@kookmin.ac.kr</a><br>
+출처: 국민대학교 경영대학 경영정보학부 소개 페이지. 학생이 만든 비공식 실습 사이트입니다.
+</div></footer>
+
+<script>
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const box=(t,d,x='')=>`<div class="box ${x}"><h3>${t}</h3><p>${d}</p></div>`;
+
+/* 1. 경영↔IT 슬라이더 */
+const mix=$('#mix');
+function setMix(){const v=+mix.value;document.documentElement.style.setProperty('--mix',v);
+ let t,p;
+ if(v<35){t='경영 쪽에 가까워요';p=['마케팅','재무관리','창업']}
+ else if(v>65){t='IT 쪽에 가까워요';p=['Python','데이터베이스','클라우드','사물인터넷(IoT)']}
+ else{t='딱 중간, 이게 비즈니스IT';p=['데이터 분석','고객관계관리(CRM)','금융투자관리','IT 컨설팅']}
+ $('#mixTitle').textContent=t;$('#mixPills').innerHTML=p.map(x=>`<span class="pill">${x}</span>`).join('')}
+mix.addEventListener('input',setMix);setMix();
+
+/* 2. 숫자 카운트 */
+const n=$('[data-n]'),end=+n.dataset.n,reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+if(reduce)n.textContent=end;else{let s=null;const f=ts=>{s??=ts;const k=Math.min((ts-s)/1200,1);n.textContent=Math.round(end*(1-Math.pow(1-k,3)));k<1&&requestAnimationFrame(f)};requestAnimationFrame(f)}
+
+/* 3. 배우는 것 탭 */
+const learn={
+ low:[['경영학 기초','마케팅, 재무관리, 창업'],['프로그래밍','HTML, Python'],['데이터베이스 기초','데이터를 저장하고 꺼내는 법']],
+ up:[['데이터 분석','비즈니스 데이터 분석과 응용'],['금융투자관리','투자와 자산을 데이터로 이해'],['고객관계관리(CRM)','고객 데이터로 관계 설계']],
+ ai:[['생성형 AI·머신러닝','AI 교육을 강화하는 중'],['데이터 기반 의사결정','숫자로 근거를 만드는 법'],['AI 기반 비즈니스 모델','AI로 새 서비스 설계'],['빅데이터·클라우드·IoT','4차 산업혁명 핵심 기술']]};
+function showLearn(k){$('#learnGrid').innerHTML=learn[k].map(a=>box(...a)).join('')}
+$$('.tab').forEach(b=>b.onclick=()=>{$$('.tab').forEach(x=>x.setAttribute('aria-selected',x===b));showLearn(b.dataset.t)});showLearn('low');
+
+/* 4. 진로 필터 */
+const careers=[
+ ['IT서비스(SI) 회사','기업의 정보시스템을 구축','dev'],['정보통신 회사','통신·네트워크 서비스','dev'],
+ ['외국계 IT 회사','글로벌 IT 기업','dev'],['IT·전략 컨설팅','기업의 IT 전략 설계','plan'],
+ ['소프트웨어 개발 회사','제품·서비스 개발','dev'],['IT 제품 제조·유통','IT 제품의 생산과 판매','plan'],
+ ['정보전략실·정보시스템실','사기업·공기업의 정보관리 부서','plan'],['(빅)데이터 분석·관리','데이터 특화 직무','data']];
+const cf={all:'전체',data:'분석',plan:'기획·전략',dev:'개발·운영'};let cc='all';
+$('#careerChips').innerHTML=Object.entries(cf).map(([k,v])=>`<button class="chip" data-k="${k}" aria-pressed="${k=='all'}">${v}</button>`).join('');
+function drawCareer(){$('#careerGrid').innerHTML=careers.filter(c=>cc=='all'||c[2]==cc).map(c=>box(c[0],c[1])).join('')}
+$('#careerChips').onclick=e=>{const b=e.target.closest('.chip');if(!b)return;cc=b.dataset.k;$$('#careerChips .chip').forEach(x=>x.setAttribute('aria-pressed',x===b));drawCareer()};drawCareer();
+
+/* 5. 자격증 검색·필터 */
+const certs=[['정보처리기사','it','한국산업인력공단'],['SQLD','it','한국데이터진흥원'],['SQLP','it','한국데이터진흥원'],['CISA','it','ISACA 국제공인정보시스템감리사'],['MCSE','it','MS 공인 시스템 엔지니어'],['OCP','it','오라클 공인 전문가'],['SAP 공인 컨설턴트','it','SAPC'],['OCJP','it','오라클 공인 자바 프로그래머'],['CCNA/CCNP','it','시스코 공인 네트워크 전문가'],['PMP','it','PMI 프로젝트관리 전문가'],['공인회계사(CPA)','pro','회계·감사'],['세무사','pro','세무'],['변리사','pro','지식재산'],['관세사','pro','관세·무역'],['감정평가사','pro','부동산 등 평가'],['AFPK','pro','자산관리사']];
+const cg={all:'전체',it:'IT·데이터',pro:'전문·금융'};let cg_='all';
+$('#certChips').innerHTML=Object.entries(cg).map(([k,v])=>`<button class="chip" data-k="${k}" aria-pressed="${k=='all'}">${v}</button>`).join('');
+function drawCert(){const q=$('#certQ').value.trim().toLowerCase();
+ const r=certs.filter(c=>(cg_=='all'||c[1]==cg_)&&(c[0]+c[2]).toLowerCase().includes(q));
+ $('#certGrid').innerHTML=r.map(c=>box(c[0],c[2])).join('');$('#certEmpty').classList.toggle('hide',r.length>0)}
+$('#certChips').onclick=e=>{const b=e.target.closest('.chip');if(!b)return;cg_=b.dataset.k;$$('#certChips .chip').forEach(x=>x.setAttribute('aria-pressed',x===b));drawCert()};
+$('#certQ').oninput=drawCert;drawCert();
+
+/* 6. 적성 테스트 */
+const T={data:['비즈니스 데이터 분석·응용','숫자와 패턴에서 답을 찾는 타입이에요. 데이터 분석, 빅데이터 직무가 가깝습니다.'],
+ inno:['비즈니스 혁신','"이걸 이렇게 바꾸면?"을 먼저 떠올리는 타입이에요. IT·전략 컨설팅, 정보화 기획이 가깝습니다.'],
+ sys:['비즈니스 시스템 개발·관리','돌아가는 구조를 만들고 지키는 게 즐거운 타입이에요. SI, 소프트웨어 개발, 정보시스템 운영이 가깝습니다.'],
+ ux:['사용자 경험','쓰는 사람의 마음이 먼저 보이는 타입이에요. 서비스·제품 기획과 IT 제품 분야가 가깝습니다.']};
+const Q=[
+ ['팀 프로젝트에서 내가 먼저 하는 일은?',[['자료를 모아 숫자로 정리','data'],['목표와 방향을 제안','inno'],['실제로 돌아가게 만들기','sys'],['쓰는 사람 입장에서 점검','ux']]],
+ ['더 끌리는 앱은?',[['내 소비를 분석해 주는 앱','data'],['기존 방식을 뒤집은 새 서비스','inno'],['오류 없이 안정적인 앱','sys'],['한눈에 쓰기 쉬운 앱','ux']]],
+ ['쉬는 시간에 보게 되는 건?',[['통계, 순위, 그래프','data'],['스타트업·트렌드 기사','inno'],['기술 동작 원리 영상','sys'],['디자인·사용 후기','ux']]],
+ ['듣고 싶은 말은?',[['근거가 확실하네요','data'],['아이디어가 새롭네요','inno'],['믿고 맡길 수 있어요','sys'],['쓰기 정말 편해요','ux']]]];
+$('#quiz').innerHTML=Q.map((q,i)=>`<fieldset class="q" style="border:0;padding:0"><legend>${i+1}. ${q[0]}</legend>${q[1].map(o=>`<label class="opt"><input type="radio" name="q${i}" value="${o[1]}"> ${o[0]}</label>`).join('')}</fieldset>`).join('');
+$('#go').onclick=()=>{const s={data:0,inno:0,sys:0,ux:0};let a=0;
+ Q.forEach((_,i)=>{const c=$(`input[name=q${i}]:checked`);if(c){s[c.value]++;a++}});
+ const r=$('#result');r.classList.remove('hide');
+ if(a<Q.length){r.innerHTML='<b>아직 고르지 않은 질문이 있어요.</b> 네 문항 모두 선택하면 결과가 나옵니다.';return}
+ const top=Object.keys(s).sort((x,y)=>s[y]-s[x])[0];
+ r.innerHTML=`<h3>가장 가까운 분야: ${T[top][0]}</h3><p>${T[top][1]}</p>`+Object.keys(T).map(k=>`${T[k][0]}<div class="bar"><i data-w="${s[k]/Q.length*100}"></i></div>`).join('')+'<p>이 분야의 과목은 <a href="https://biz.kookmin.ac.kr/undergraduate/info/major?tab=2">교과목 보기</a>에서 확인해 보세요.</p>';
+ requestAnimationFrame(()=>$$('.bar i',r).forEach(i=>i.style.width=i.dataset.w+'%'));r.scrollIntoView({block:'nearest'})};
+$('#reset').onclick=()=>{$('#quiz').reset();$('#result').classList.add('hide')};
+
+/* 7. 현재 섹션 표시 */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)$$('nav a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')=='#'+e.target.id))}),{rootMargin:'-40% 0px -55% 0px'});
+$$('section').forEach(s=>io.observe(s));
+</script>
+</body>
+</html>
