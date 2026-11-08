@@ -4,15 +4,15 @@ const ARTWORK_IDS = new Set([
   "poster",
 ]);
 
+// 표준 Response(JSON) 생성. Netlify의 신형 ESM 함수는 Response 객체를 반환해야 한다.
 function json(statusCode, body) {
-  return {
-    statusCode,
+  return new Response(JSON.stringify(body), {
+    status: statusCode,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
       "Cache-Control": "no-store",
     },
-    body: JSON.stringify(body),
-  };
+  });
 }
 
 function getConfig() {
@@ -26,7 +26,7 @@ function getConfig() {
 // 응원 1건 = 행 1개로 저장되어 있으므로, 행을 세어 집계한다(덮어쓰기 아님).
 async function readStats(config) {
   const entries = await Promise.all([...ARTWORK_IDS].map(async artworkId => {
-    // 누적 횟수: count=exact 로 전체 행 수를 센다.
+    // 누적 횟수: count=exact 로 전체 행 수를 센다(행을 가져오지 않으므로 행 상한과 무관).
     const countQuery = new URLSearchParams({ artwork_id: `eq.${artworkId}`, select: "id" });
     const countResponse = await fetch(`${config.url}/rest/v1/reactions?${countQuery}`, {
       method: "HEAD",
@@ -65,30 +65,47 @@ async function readStats(config) {
   return Object.fromEntries(entries);
 }
 
+// Netlify 신형 ESM 함수: 표준 Request를 받아 표준 Response를 반환한다.
 export default async (request) => {
-  if (request.httpMethod === "OPTIONS") {
-    return { statusCode: 204, headers: { Allow: "GET, POST, OPTIONS" }, body: "" };
+  const method = request.method;
+
+  if (method === "OPTIONS") {
+    return new Response("", { status: 204, headers: { Allow: "GET, POST, OPTIONS" } });
   }
-  if (request.httpMethod !== "GET" && request.httpMethod !== "POST") {
+  if (method !== "GET" && method !== "POST") {
     return json(405, { error: "Method not allowed." });
+  }
+
+  // POST 입력 검사는 서버 설정(환경 변수)과 무관하게 먼저 수행한다.
+  // 이렇게 하면 "입력 오류(400)"와 "서버 설정 실패(500)"가 섞이지 않는다.
+  let artworkId;
+  if (method === "POST") {
+    // 본문을 문자열로 먼저 읽어 과도하게 큰 요청을 파싱 전에 거절한다.
+    const raw = await request.text();
+    if (raw.length > 1024) {
+      return json(413, { error: "Request body is too large." });
+    }
+    let body;
+    try {
+      body = JSON.parse(raw || "{}");
+    } catch {
+      return json(400, { error: "Invalid JSON body." });
+    }
+    artworkId = body?.artworkId;
+    // 빈 값·타입 오류·너무 긴 값·허용 외 값을 서버에서 모두 거절한다.
+    if (typeof artworkId !== "string" || artworkId.length === 0 || artworkId.length > 64) {
+      return json(400, { error: "Invalid artwork id." });
+    }
+    if (!ARTWORK_IDS.has(artworkId)) {
+      return json(400, { error: "Unknown artwork." });
+    }
   }
 
   let config;
   try {
     config = getConfig();
-    if (request.httpMethod === "GET") {
+    if (method === "GET") {
       return json(200, { stats: await readStats(config) });
-    }
-
-    let body;
-    try {
-      body = JSON.parse(request.body || "{}");
-    } catch {
-      return json(400, { error: "Invalid JSON body." });
-    }
-    const artworkId = body?.artworkId;
-    if (typeof artworkId !== "string" || !ARTWORK_IDS.has(artworkId)) {
-      return json(400, { error: "Unknown artwork." });
     }
 
     const saved = await fetch(`${config.url}/rest/v1/reactions`, {
@@ -105,7 +122,7 @@ export default async (request) => {
     try {
       return json(201, { saved: true, stats: await readStats(config) });
     } catch {
-      // The insert succeeded; let the browser acknowledge it and retry the read.
+      // 저장은 성공했으니, 브라우저가 이를 받고 집계를 다시 읽게 한다.
       return json(201, { saved: true });
     }
   } catch {

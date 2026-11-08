@@ -53,6 +53,18 @@
 4. 없는 작품 id로 요청하면 저장이 거절되는지 확인한다.
 5. 네트워크를 끊고 눌렀을 때 성공 메시지가 뜨지 않고 실패 안내가 나오는지 확인한다.
 
-## 10. 현재 상태 메모
-- 응원 보드 뼈대(프론트+함수+스키마)는 이미 구현되어 있음.
-- 남은 작업: 3개 항목의 id/제목을 위 작품 목록으로 교체 (index.html, reactions.mjs, schema.sql 동시 반영).
+## 10. 서버 입력 검사 (reactions.mjs)
+- 본문 1KB 초과: 413 거절 (파싱 전)
+- artworkId 빈 값 / 문자열 아님 / 64자 초과: 400 거절
+- 허용 3개 id가 아니면: 400 거절
+- 프론트는 서버 응답을 textContent로만 표시(innerHTML 미사용) → 입력이 HTML로 실행되지 않음
+
+## 11. 조회 누락 방지 설계
+- 누적 횟수: Prefer count=exact + HEAD 요청으로 DB가 센 총계를 content-range에서 읽음.
+  행을 직접 가져오지 않으므로 REST 기본 행 상한(약 1000)과 무관하게 정확.
+- 최근 시각: order=created_at.desc & limit=1 로 1건만 조회.
+
+## 12. 현재 상태 메모
+- 테이블 생성 확인됨(사용자 확인). 연결 코드(브라우저→Netlify 함수→Supabase) 구현 완료.
+- 로컬 검증: node --check 통과, netlify build 성공, index.html(root/public) 동일.
+- 실제 저장·교차기기 집계는 배포 후 Netlify 환경변수 설정 상태에서 확인 필요(로컬 미검증).
