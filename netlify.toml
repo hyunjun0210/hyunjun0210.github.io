@@ -1,0 +1,11 @@
+[build]
+  # 공개 폴더는 public/ 하나로 한정한다. 루트의 .git, .kiro, supabase,
+  # kart3d.html, README 등은 public 밖이므로 배포 결과물에 포함되지 않는다.
+  publish = "public"
+  # 서버 함수는 public에 복사하지 않고 이 폴더에서 Netlify가 직접 번들한다.
+  functions = "netlify/functions"
+
+[[headers]]
+  for = "/.netlify/functions/*"
+  [headers.values]
+    Cache-Control = "no-store"
