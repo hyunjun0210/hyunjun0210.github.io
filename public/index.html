@@ -66,6 +66,25 @@ footer{padding:40px 0 60px;color:var(--mute);font-size:14px;text-align:center}
 .cheer-button{display:inline-block;background:var(--accent);color:#fff;border:0;border-radius:12px;padding:10px 18px;font:inherit;font-size:15px;font-weight:500;cursor:pointer}
 .cheer-button:disabled{opacity:.6;cursor:wait}
 .cheer-status{min-height:1.7em;margin:14px 0 0;font-size:14px}
+.gb-form{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin-top:20px}
+.gb-row{display:flex;flex-wrap:wrap;gap:14px}
+.gb-field{display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--mute)}
+.gb-field.gb-grow{flex:1 1 260px}
+.gb-field input{font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.gb-field input:focus-visible{outline:3px solid var(--accent);outline-offset:1px}
+.gb-actions{display:flex;align-items:center;gap:12px;margin-top:14px}
+.gb-submit{background:var(--accent);color:#fff;border:0;border-radius:12px;padding:10px 22px;font:inherit;font-size:15px;font-weight:500;cursor:pointer}
+.gb-submit:hover{filter:brightness(1.08)}
+.gb-submit:disabled{opacity:.6;cursor:wait}
+.gb-count{font-size:13px;color:var(--mute)}
+.gb-status{min-height:1.7em;margin:16px 0 0;font-size:14px}
+.gb-list{list-style:none;padding:0;margin:16px 0 0;display:grid;gap:12px}
+.gb-item{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+.gb-item .gb-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:6px}
+.gb-item .gb-nick{font-weight:700;color:var(--ink)}
+.gb-item .gb-time{font-size:12px;color:var(--mute);white-space:nowrap}
+.gb-item .gb-msg{margin:0;color:var(--ink);word-break:break-word}
+.gb-empty{color:var(--mute);font-size:14px}
 </style>
 </head>
 <body>
@@ -76,6 +95,7 @@ footer{padding:40px 0 60px;color:var(--mute);font-size:14px;text-align:center}
   <a href="#skills">관심·역량</a>
   <a href="#career">진로 설계</a>
   <a href="#cheer">응원 보드</a>
+  <a href="#guestbook">방명록</a>
   <a href="#contact">연락처</a>
 </div></nav>
 
@@ -209,6 +229,29 @@ footer{padding:40px 0 60px;color:var(--mute);font-size:14px;text-align:center}
   <p class="cheer-status" role="status" aria-live="polite">응원 횟수를 불러오고 있습니다.</p>
 </div></section>
 
+<section id="guestbook"><div class="wrap">
+  <h2>방명록</h2>
+  <p>포트폴리오를 보고 짧은 응원 글을 남겨 주세요. 실명·연락처는 받지 않습니다. 별명 2~12자, 메시지 1~100자로 적어 주세요.</p>
+  <form class="gb-form" novalidate>
+    <div class="gb-row">
+      <label class="gb-field">
+        <span>별명</span>
+        <input type="text" name="nickname" minlength="2" maxlength="12" placeholder="예: 파란별" autocomplete="off" required>
+      </label>
+      <label class="gb-field gb-grow">
+        <span>한 줄 메시지</span>
+        <input type="text" name="message" minlength="1" maxlength="100" placeholder="예: 애니메이션 제작 과정이 궁금해요." autocomplete="off" required>
+      </label>
+    </div>
+    <div class="gb-actions">
+      <button class="gb-submit" type="submit">등록</button>
+      <span class="gb-count" aria-hidden="true">0/100</span>
+    </div>
+  </form>
+  <p class="gb-status" role="status" aria-live="polite">방명록을 불러오고 있습니다.</p>
+  <ul class="gb-list" aria-live="polite"></ul>
+</div></section>
+
 <section id="contact"><div class="wrap">
   <h2>연락처</h2>
   <p>궁금한 점이나 함께하고 싶은 일이 있다면 편하게 연락해 주세요.</p>
@@ -311,6 +354,105 @@ cheerButtons.forEach(button=>{
   });
 });
 loadCheerStats();
+
+// ===== 방명록 =====
+const gbForm=document.querySelector('.gb-form');
+const gbNick=gbForm.querySelector('input[name=nickname]');
+const gbMsg=gbForm.querySelector('input[name=message]');
+const gbSubmit=gbForm.querySelector('.gb-submit');
+const gbCount=gbForm.querySelector('.gb-count');
+const gbStatus=document.querySelector('.gb-status');
+const gbList=document.querySelector('.gb-list');
+const GB_NICK_MIN=2,GB_NICK_MAX=12,GB_MSG_MIN=1,GB_MSG_MAX=100;
+const gbTime=new Intl.RelativeTimeFormat('ko-KR',{numeric:'auto'});
+function gbFormatTime(iso){
+  const t=new Date(iso);
+  if(Number.isNaN(t.getTime()))return '';
+  const diff=Math.round((t.getTime()-Date.now())/1000);
+  const steps=[['second',60],['minute',60],['hour',24]];
+  let v=diff;
+  for(const [unit,size] of steps){
+    if(Math.abs(v)<size)return gbTime.format(v,unit);
+    v=Math.round(v/size);
+  }
+  if(Math.abs(Math.round(diff/86400))<7)return gbTime.format(Math.round(diff/86400),'day');
+  return t.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'});
+}
+// 방문자 입력은 textContent로만 넣는다. innerHTML을 쓰지 않으므로 '<b>' 같은 입력은
+// HTML로 실행되지 않고 글자 그대로 표시된다.
+function gbRender(entries){
+  gbList.textContent='';
+  if(!Array.isArray(entries)||entries.length===0){
+    const li=document.createElement('li');
+    li.className='gb-empty';
+    li.textContent='아직 남겨진 글이 없습니다. 첫 글을 남겨 보세요.';
+    gbList.appendChild(li);
+    return;
+  }
+  for(const e of entries){
+    const li=document.createElement('li');
+    li.className='gb-item';
+    const head=document.createElement('div');
+    head.className='gb-head';
+    const nick=document.createElement('span');
+    nick.className='gb-nick';
+    nick.textContent=e.nickname;          // 글자로만 표시
+    const time=document.createElement('time');
+    time.className='gb-time';
+    time.textContent=gbFormatTime(e.created_at);
+    if(e.created_at)time.dateTime=e.created_at;
+    head.appendChild(nick);head.appendChild(time);
+    const msg=document.createElement('p');
+    msg.className='gb-msg';
+    msg.textContent=e.message;            // 글자로만 표시
+    li.appendChild(head);li.appendChild(msg);
+    gbList.appendChild(li);
+  }
+}
+async function gbLoad(){
+  try{
+    const res=await fetch('/.netlify/functions/guestbook');
+    if(!res.ok)throw new Error('목록을 불러오지 못했습니다.');
+    const data=await res.json();
+    gbRender(data.entries);
+    gbStatus.textContent='';
+  }catch(err){
+    gbStatus.textContent='방명록에 연결할 수 없습니다. 잠시 후 다시 확인해 주세요.';
+  }
+}
+function gbUpdateCount(){
+  gbCount.textContent=gbMsg.value.length+'/'+GB_MSG_MAX;
+}
+gbMsg.addEventListener('input',gbUpdateCount);
+gbUpdateCount();
+gbForm.addEventListener('submit',async(event)=>{
+  event.preventDefault();
+  const nickname=gbNick.value.trim();
+  const message=gbMsg.value.trim();
+  // 브라우저 측 검사(서버에서도 동일하게 검사한다)
+  if(nickname.length<GB_NICK_MIN||nickname.length>GB_NICK_MAX){
+    gbStatus.textContent='별명은 '+GB_NICK_MIN+'~'+GB_NICK_MAX+'자여야 합니다.';return;
+  }
+  if(message.length<GB_MSG_MIN||message.length>GB_MSG_MAX){
+    gbStatus.textContent='메시지는 '+GB_MSG_MIN+'~'+GB_MSG_MAX+'자여야 합니다.';return;
+  }
+  gbSubmit.disabled=true;
+  gbStatus.textContent='글을 저장하고 있습니다.';
+  try{
+    const res=await fetch('/.netlify/functions/guestbook',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nickname,message})});
+    const data=await res.json();
+    if(!res.ok)throw new Error(data.error||'글을 저장하지 못했습니다.');
+    if(data.entries)gbRender(data.entries);
+    else await gbLoad();
+    gbStatus.textContent='글이 등록되었습니다.';
+    gbForm.reset();gbUpdateCount();
+  }catch(err){
+    gbStatus.textContent=err.message||'글을 저장하지 못했습니다. 연결을 확인하고 다시 시도해 주세요.';
+  }finally{
+    gbSubmit.disabled=false;
+  }
+});
+gbLoad();
 </script>
 </body>
 </html>
