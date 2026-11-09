@@ -4,7 +4,8 @@ create table if not exists public.reactions (
   artwork_id text not null check (artwork_id in (
     'photo-night',
     'animation-short',
-    'poster'
+    'poster',
+    'kart3d'
   )),
   created_at timestamptz not null default now()
 );

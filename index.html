@@ -85,6 +85,11 @@ footer{padding:40px 0 60px;color:var(--mute);font-size:14px;text-align:center}
 .gb-item .gb-time{font-size:12px;color:var(--mute);white-space:nowrap}
 .gb-item .gb-msg{margin:0;color:var(--ink);word-break:break-word}
 .gb-empty{color:var(--mute);font-size:14px}
+.proj-tags{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 16px}
+.proj-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.proj-actions .btn{margin-top:0}
+.proj-actions .btn.ghost{margin-left:0}
+.proj-note{font-size:13px;color:var(--mute);margin:16px 0 0}
 </style>
 </head>
 <body>
@@ -94,6 +99,7 @@ footer{padding:40px 0 60px;color:var(--mute);font-size:14px;text-align:center}
   <a href="#study">전공</a>
   <a href="#skills">관심·역량</a>
   <a href="#career">진로 설계</a>
+  <a href="#project">프로젝트</a>
   <a href="#cheer">응원 보드</a>
   <a href="#guestbook">방명록</a>
   <a href="#contact">연락처</a>
@@ -203,6 +209,28 @@ footer{padding:40px 0 60px;color:var(--mute);font-size:14px;text-align:center}
   </ul>
 </div></section>
 
+<section id="project"><div class="wrap">
+  <h2>프로젝트 · 3D 카트 레이서</h2>
+  <p>웹 브라우저에서 바로 즐기는 3D 카트 레이싱 게임을 직접 만들었습니다. 코스 주행, 드리프트로 부스터 충전, 아이템, AI 상대와의 3랩 레이스를 담았습니다. 설치 없이 키보드로 플레이할 수 있습니다.</p>
+  <div class="card proj-card">
+    <div class="proj-body">
+      <h3>미니 카트 레이서 3D</h3>
+      <p>Three.js로 만든 웹 3D 게임입니다. 조작: ↑가속 ↓브레이크 ←→조향 Shift드리프트 Space부스터 Ctrl/X아이템 C시점 R재시작.</p>
+      <div class="proj-tags">
+        <span class="tag">Three.js</span>
+        <span class="tag">WebGL</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">3D 그래픽</span>
+      </div>
+      <div class="proj-actions">
+        <a class="btn" href="kart3d.html" target="_blank" rel="noopener">▶ 새 탭에서 플레이</a>
+        <a class="btn ghost" href="https://github.com/hyunjun0210/hyunjun0210.github.io/blob/main/kart3d.html" target="_blank" rel="noopener">소스 코드 보기</a>
+      </div>
+      <p class="proj-note">※ 키보드 조작이 필요하여 PC 환경을 권장합니다. 사용한 오픈소스: <a href="https://threejs.org" target="_blank" rel="noopener">Three.js</a> (r128).</p>
+    </div>
+  </div>
+</div></section>
+
 <section id="cheer"><div class="wrap">
   <h2>작품 응원 보드</h2>
   <p>마음에 드는 작품을 응원해 주세요. 응원 횟수는 모든 방문자의 누적 횟수이며, 중복 참여가 가능합니다.</p>
@@ -221,6 +249,12 @@ footer{padding:40px 0 60px;color:var(--mute);font-size:14px;text-align:center}
     </article>
     <article class="cheer-card" data-artwork="poster">
       <h3>포스터</h3><p>메시지를 담아 디자인한 그래픽 포스터 작품입니다.</p>
+      <p class="cheer-count">응원 <span>불러오는 중</span>회</p>
+      <p class="cheer-latest">최근 응원 <time>—</time></p>
+      <button class="cheer-button" type="button">응원하기</button>
+    </article>
+    <article class="cheer-card" data-artwork="kart3d">
+      <h3>3D 카트 레이서</h3><p>Three.js로 직접 만든 웹 3D 레이싱 게임입니다.</p>
       <p class="cheer-count">응원 <span>불러오는 중</span>회</p>
       <p class="cheer-latest">최근 응원 <time>—</time></p>
       <button class="cheer-button" type="button">응원하기</button>

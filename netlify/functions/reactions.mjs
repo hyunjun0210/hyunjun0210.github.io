@@ -2,6 +2,7 @@ const ARTWORK_IDS = new Set([
   "photo-night",
   "animation-short",
   "poster",
+  "kart3d",
 ]);
 
 // 표준 Response(JSON) 생성. Netlify의 신형 ESM 함수는 Response 객체를 반환해야 한다.
