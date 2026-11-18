@@ -64,7 +64,8 @@ footer{padding:40px 0 60px;color:var(--mute);font-size:14px;text-align:center}
 .cheer-count{font-weight:700;color:var(--ink);min-height:0}
 .cheer-latest{font-size:13px;color:var(--mute);margin:.2em 0 10px;min-height:1.5em}
 .cheer-button{display:inline-block;background:var(--accent);color:#fff;border:0;border-radius:12px;padding:10px 18px;font:inherit;font-size:15px;font-weight:500;cursor:pointer}
-.cheer-button:disabled{opacity:.6;cursor:wait}
+.cheer-button:disabled{opacity:.6;cursor:not-allowed}
+.cheer-button.is-busy{cursor:progress}
 .cheer-status{min-height:1.7em;margin:14px 0 0;font-size:14px}
 .gb-form{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin-top:20px}
 .gb-row{display:flex;flex-wrap:wrap;gap:14px}
@@ -75,7 +76,8 @@ footer{padding:40px 0 60px;color:var(--mute);font-size:14px;text-align:center}
 .gb-actions{display:flex;align-items:center;gap:12px;margin-top:14px}
 .gb-submit{background:var(--accent);color:#fff;border:0;border-radius:12px;padding:10px 22px;font:inherit;font-size:15px;font-weight:500;cursor:pointer}
 .gb-submit:hover{filter:brightness(1.08)}
-.gb-submit:disabled{opacity:.6;cursor:wait}
+.gb-submit:disabled{opacity:.6;cursor:not-allowed}
+.gb-submit.is-busy{cursor:progress}
 .gb-count{font-size:13px;color:var(--mute)}
 .gb-status{min-height:1.7em;margin:16px 0 0;font-size:14px}
 .gb-list{list-style:none;padding:0;margin:16px 0 0;display:grid;gap:12px}
@@ -373,6 +375,7 @@ cheerButtons.forEach(button=>{
   button.addEventListener('click',async()=>{
     const card=button.closest('.cheer-card');
     button.disabled=true;
+    button.classList.add('is-busy');   // 저장 중에만 로딩 커서
     cheerStatus.textContent='응원을 저장하고 있습니다.';
     try{
       const response=await fetch('/.netlify/functions/reactions',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({artworkId:card.dataset.artwork})});
@@ -383,6 +386,9 @@ cheerButtons.forEach(button=>{
       cheerStatus.textContent='응원이 저장되었습니다.';
     }catch(error){
       cheerStatus.textContent='응원을 저장하지 못했습니다. 연결을 확인하고 다시 시도해 주세요.';
+    }finally{
+      // 성공이든 실패든 저장이 끝나면 로딩 표시를 없애고 다시 누를 수 있게 한다.
+      button.classList.remove('is-busy');
       button.disabled=false;
     }
   });
